@@ -1,0 +1,97 @@
+name: Auto Release
+
+on:
+  push:
+    branches: [ main ]  # or master, depending on your default branch
+    paths:
+      - '**.zip'  # Only trigger when zip files change
+      - '.github/workflows/auto-release.yml'  # Or when this workflow changes
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code with LFS
+      uses: actions/checkout@v3
+      with:
+        lfs: true
+        fetch-depth: 0  # Need full history for version calculation
+    
+    - name: Pull LFS files
+      run: git lfs pull
+    
+    - name: Get current version
+      id: version
+      run: |
+        # Get the number of commits as version patch number
+        VERSION_PATCH=$(git rev-list --count HEAD)
+        VERSION="1.0.${VERSION_PATCH}"
+        echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+        echo "Version will be: ${VERSION}"
+    
+    - name: Find and rename modpack zip
+      id: modpack
+      run: |
+        # Find the modpack zip file (adjust pattern as needed)
+        ORIGINAL_ZIP=$(find . -name "*.zip" -type f | head -1)
+        echo "Found modpack: ${ORIGINAL_ZIP}"
+        
+        # Get the base name without path
+        BASENAME=$(basename "${ORIGINAL_ZIP}" .zip)
+        
+        # Create TWO files: one with version, one with stable name
+        VERSIONED_ZIP="modpack-v${{ steps.version.outputs.VERSION }}.zip"
+        STABLE_ZIP="modpack-latest.zip"
+        
+        # Copy to both names
+        cp "${ORIGINAL_ZIP}" "${VERSIONED_ZIP}"
+        cp "${ORIGINAL_ZIP}" "${STABLE_ZIP}"
+        
+        echo "ORIGINAL_ZIP=${ORIGINAL_ZIP}" >> $GITHUB_OUTPUT
+        echo "VERSIONED_ZIP=${VERSIONED_ZIP}" >> $GITHUB_OUTPUT
+        echo "STABLE_ZIP=${STABLE_ZIP}" >> $GITHUB_OUTPUT
+        echo "BASENAME=${BASENAME}" >> $GITHUB_OUTPUT
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.version.outputs.VERSION }}
+        release_name: Release v${{ steps.version.outputs.VERSION }}
+        body: |
+          Automated release v${{ steps.version.outputs.VERSION }}
+          
+          ## Download
+          - [Download Modpack (versioned)](https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.VERSION }}/${{ steps.modpack.outputs.VERSIONED_ZIP }})
+          - [Download Latest (Stable URL)](https://github.com/${{ github.repository }}/releases/latest/download/modpack-latest.zip)
+        draft: false
+        prerelease: false
+    
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./${{ steps.modpack.outputs.VERSIONED_ZIP }}
+        asset_name: ${{ steps.modpack.outputs.VERSIONED_ZIP }}
+        asset_content_type: application/zip
+    
+    - name: Upload Stable Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./${{ steps.modpack.outputs.STABLE_ZIP }}
+        asset_name: ${{ steps.modpack.outputs.STABLE_ZIP }}
+        asset_content_type: application/zip
+    
+    - name: Update Latest Release
+      run: |
+        # This ensures the "latest" tag always points to this release
+        git tag -f latest
+        git push origin latest --force
