@@ -163,8 +163,37 @@ jobs:
           # Remove or reset JavaPath line
           sed -i '/^JavaPath=/d' temp_extract/instance.cfg
           
+          # Remove or reset Java location/version lines
+          sed -i '/^JavaVersion=/d' temp_extract/instance.cfg
+          sed -i '/^JavaArchitecture=/d' temp_extract/instance.cfg
+          sed -i '/^JavaRealArchitecture=/d' temp_extract/instance.cfg
+          sed -i '/^JavaVendor=/d' temp_extract/instance.cfg
+          sed -i '/^JvmArgs=/d' temp_extract/instance.cfg
+          
           # Remove or reset Override Java Location
           sed -i 's/^OverrideJavaLocation=.*/OverrideJavaLocation=false/' temp_extract/instance.cfg
+          sed -i 's/^OverrideJava=.*/OverrideJava=false/' temp_extract/instance.cfg
+          
+          # Keep OverrideJavaArgs if it exists (for memory settings)
+          # Just clean the JavaArgs to only keep memory and GC settings, removing paths
+          if grep -q "^JavaArgs=" temp_extract/instance.cfg; then
+            # Extract current JavaArgs
+            CURRENT_ARGS=$(grep "^JavaArgs=" temp_extract/instance.cfg | cut -d'=' -f2-)
+            
+            # Keep only safe arguments (memory, GC, etc) and remove anything with paths
+            # This regex keeps -Xmx, -Xms, -XX options but removes anything with / or \ or :
+            CLEANED_ARGS=$(echo "$CURRENT_ARGS" | sed -E 's/-[^ ]*[\/\\:][^ ]*//g' | sed -E 's/  +/ /g' | sed 's/^ *//;s/ *$//')
+            
+            # If no Xmx is present, add a default
+            if ! echo "$CLEANED_ARGS" | grep -q "Xmx"; then
+              CLEANED_ARGS="$CLEANED_ARGS -Xmx4G"
+            fi
+            
+            # Update the JavaArgs line with cleaned arguments
+            sed -i "s|^JavaArgs=.*|JavaArgs=$CLEANED_ARGS|" temp_extract/instance.cfg
+            
+            echo "Cleaned JavaArgs: $CLEANED_ARGS"
+          fi
           
           # Remove any absolute paths that might contain usernames
           # This removes any line containing common user directory patterns
@@ -177,11 +206,6 @@ jobs:
           sed -i '/^WrapperCommand=/d' temp_extract/instance.cfg
           sed -i '/^PreLaunchCommand=/d' temp_extract/instance.cfg
           sed -i '/^PostExitCommand=/d' temp_extract/instance.cfg
-          
-          # Reset Java arguments to defaults if they exist
-          if grep -q "^JavaArgs=" temp_extract/instance.cfg; then
-            sed -i 's/^JavaArgs=.*/JavaArgs=-Xmx4G -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M/' temp_extract/instance.cfg
-          fi
           
           echo "Scrubbed instance.cfg:"
           echo "========================"
