@@ -1,8 +1,8 @@
 # 📦 TravCraft Client Modlist
 
-**Version:** v1.0.14
+**Version:** v1.0.16
 **Total Mods:** 66
-**Last Updated:** 2025-10-01 14:56:17 UTC
+**Last Updated:** 2025-10-01 15:03:18 UTC
 
 ## 📋 Complete Mod List
 
