@@ -50,7 +50,7 @@ jobs:
             echo "Downloaded versioned release"
           else
             # Fallback to original filename pattern
-            PREV_DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/${LATEST_TAG}/modpack-latest.zip"
+            PREV_DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/${LATEST_TAG}/TravCraft-latest.zip"
             echo "Trying fallback URL: $PREV_DOWNLOAD_URL"
             if curl -L -f -o previous_modpack.zip "$PREV_DOWNLOAD_URL" 2>/dev/null; then
               echo "Downloaded from fallback URL"
@@ -172,7 +172,7 @@ jobs:
         fi
         
         # Also create the stable version
-        cp TravCraft-Client-v${{ steps.version.outputs.VERSION }}.zip modpack-latest.zip
+        cp TravCraft-Client-v${{ steps.version.outputs.VERSION }}.zip travcraft-latest.zip
         
         # Cleanup
         rm -rf temp_extract
