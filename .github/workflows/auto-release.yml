@@ -1,13 +1,14 @@
-name: Auto Release
+name: Auto Release with Mod Changes
 
 on:
   push:
     branches: [ main ]  # or master
     paths:
-      - '**.zip'
+      - 'TravCraft-Client.zip'
+      - '.github/workflows/*.yml'
 
 permissions:
-  contents: write  # Important for creating releases
+  contents: write
 
 jobs:
   release:
@@ -31,37 +32,187 @@ jobs:
         echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
         echo "Creating version: ${VERSION}"
     
-    - name: Prepare release files
-      id: files
+    - name: Get previous release mods list
+      id: previous
       run: |
-        # Find your modpack zip
-        ORIGINAL=$(find . -name "*.zip" -type f | head -1)
-        echo "Found: ${ORIGINAL}"
+        # Try to get the latest release tag
+        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
         
-        # Create both versioned and stable filenames
-        cp "${ORIGINAL}" "modpack-v${{ steps.version.outputs.VERSION }}.zip"
-        cp "${ORIGINAL}" "modpack-latest.zip"
+        if [ -n "$LATEST_TAG" ]; then
+          echo "Found previous release: $LATEST_TAG"
+          
+          # Checkout previous release to temp directory
+          git worktree add /tmp/previous-release $LATEST_TAG
+          
+          # Extract previous modpack if it exists
+          if [ -f "/tmp/previous-release/TravCraft-Client.zip" ]; then
+            cd /tmp/previous-release
+            git lfs pull
+            unzip -q TravCraft-Client.zip -d extracted_old
+            
+            # List mods from previous version
+            if [ -d "extracted_old/minecraft/mods" ]; then
+              cd extracted_old/minecraft/mods
+              ls -1 *.jar 2>/dev/null | sort > /tmp/old_mods.txt || touch /tmp/old_mods.txt
+            else
+              touch /tmp/old_mods.txt
+            fi
+          else
+            touch /tmp/old_mods.txt
+          fi
+          
+          # Cleanup worktree
+          cd $GITHUB_WORKSPACE
+          git worktree remove /tmp/previous-release
+        else
+          echo "No previous release found, this is the first release"
+          touch /tmp/old_mods.txt
+        fi
         
-        echo "Files created:"
-        ls -la *.zip
+        echo "Previous mods list:"
+        cat /tmp/old_mods.txt
+    
+    - name: Extract and analyze current modpack
+      id: analyze
+      run: |
+        # Create temp directory for extraction
+        mkdir -p extracted_new
+        
+        # Extract current modpack
+        unzip -q TravCraft-Client.zip -d extracted_new
+        
+        # List current mods
+        if [ -d "extracted_new/minecraft/mods" ]; then
+          cd extracted_new/minecraft/mods
+          ls -1 *.jar 2>/dev/null | sort > /tmp/new_mods.txt || touch /tmp/new_mods.txt
+          MOD_COUNT=$(wc -l < /tmp/new_mods.txt)
+          echo "MOD_COUNT=${MOD_COUNT}" >> $GITHUB_OUTPUT
+        else
+          touch /tmp/new_mods.txt
+          echo "MOD_COUNT=0" >> $GITHUB_OUTPUT
+        fi
+        
+        cd $GITHUB_WORKSPACE
+        
+        echo "Current mods list:"
+        cat /tmp/new_mods.txt
+        
+        # Calculate differences
+        echo "### Added Mods" > /tmp/mod_changes.md
+        comm -13 /tmp/old_mods.txt /tmp/new_mods.txt > /tmp/added_mods.txt
+        if [ -s /tmp/added_mods.txt ]; then
+          echo "" >> /tmp/mod_changes.md
+          while IFS= read -r mod; do
+            echo "✅ \`$mod\`" >> /tmp/mod_changes.md
+          done < /tmp/added_mods.txt
+        else
+          echo "" >> /tmp/mod_changes.md
+          echo "_No mods added_" >> /tmp/mod_changes.md
+        fi
+        
+        echo "" >> /tmp/mod_changes.md
+        echo "### Removed Mods" >> /tmp/mod_changes.md
+        comm -23 /tmp/old_mods.txt /tmp/new_mods.txt > /tmp/removed_mods.txt
+        if [ -s /tmp/removed_mods.txt ]; then
+          echo "" >> /tmp/mod_changes.md
+          while IFS= read -r mod; do
+            echo "❌ \`$mod\`" >> /tmp/mod_changes.md
+          done < /tmp/removed_mods.txt
+        else
+          echo "" >> /tmp/mod_changes.md
+          echo "_No mods removed_" >> /tmp/mod_changes.md
+        fi
+        
+        echo "" >> /tmp/mod_changes.md
+        echo "### Statistics" >> /tmp/mod_changes.md
+        echo "- Total mods: **${MOD_COUNT}**" >> /tmp/mod_changes.md
+        ADDED_COUNT=$(wc -l < /tmp/added_mods.txt)
+        REMOVED_COUNT=$(wc -l < /tmp/removed_mods.txt)
+        echo "- Added: **${ADDED_COUNT}**" >> /tmp/mod_changes.md
+        echo "- Removed: **${REMOVED_COUNT}**" >> /tmp/mod_changes.md
+        
+        echo "Mod changes summary:"
+        cat /tmp/mod_changes.md
+    
+    - name: Update instance.cfg with version
+      run: |
+        # Extract modpack
+        mkdir -p temp_extract
+        unzip -q TravCraft-Client.zip -d temp_extract
+        
+        # Update instance.cfg if it exists
+        if [ -f "temp_extract/instance.cfg" ]; then
+          # Update the instance name to include version
+          sed -i "s/name=.*/name=TravCraft-Client-${{ steps.version.outputs.VERSION }}/" temp_extract/instance.cfg
+          
+          echo "Updated instance.cfg:"
+          grep "name=" temp_extract/instance.cfg
+          
+          # Repackage the modpack with updated config
+          cd temp_extract
+          zip -rq ../TravCraft-Client-v${{ steps.version.outputs.VERSION }}.zip *
+          cd ..
+        else
+          echo "No instance.cfg found, copying original"
+          cp TravCraft-Client.zip TravCraft-Client-v${{ steps.version.outputs.VERSION }}.zip
+        fi
+        
+        # Also create the stable version
+        cp TravCraft-Client-v${{ steps.version.outputs.VERSION }}.zip modpack-latest.zip
+        
+        # Cleanup
+        rm -rf temp_extract
+    
+    - name: Generate release body
+      id: release_body
+      run: |
+        # Create release body with mod changes
+        cat > /tmp/release_body.md << 'EOF'
+        ## TravCraft Client v${{ steps.version.outputs.VERSION }}
+        
+        ### 📦 Download Options
+        
+        **Stable URL (always latest):**
+        ```
+        https://github.com/${{ github.repository }}/releases/latest/download/modpack-latest.zip
+        ```
+        
+        **This version:**
+        ```
+        https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.VERSION }}/TravCraft-Client-v${{ steps.version.outputs.VERSION }}.zip
+        ```
+        
+        ### 📋 Changes in this Release
+        
+        EOF
+        
+        # Append mod changes
+        cat /tmp/mod_changes.md >> /tmp/release_body.md
+        
+        echo "" >> /tmp/release_body.md
+        echo "---" >> /tmp/release_body.md
+        echo "_Instance name automatically set to: TravCraft-Client-${{ steps.version.outputs.VERSION }}_" >> /tmp/release_body.md
+        
+        # Save to output
+        echo "RELEASE_BODY<<EOF" >> $GITHUB_OUTPUT
+        cat /tmp/release_body.md >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
     
     - name: Create Release and Upload Assets
       uses: softprops/action-gh-release@v2
       with:
         tag_name: v${{ steps.version.outputs.VERSION }}
-        name: Release v${{ steps.version.outputs.VERSION }}
-        body: |
-          ## Minecraft Modpack v${{ steps.version.outputs.VERSION }}
-          
-          ### Download Options:
-          📦 **Stable URL (always latest):**
-          `https://github.com/${{ github.repository }}/releases/latest/download/modpack-latest.zip`
-          
-          📦 **This version:**
-          `https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.VERSION }}/modpack-v${{ steps.version.outputs.VERSION }}.zip`
+        name: TravCraft Client v${{ steps.version.outputs.VERSION }}
+        body: ${{ steps.release_body.outputs.RELEASE_BODY }}
         files: |
-          modpack-v${{ steps.version.outputs.VERSION }}.zip
+          TravCraft-Client-v${{ steps.version.outputs.VERSION }}.zip
           modpack-latest.zip
         fail_on_unmatched_files: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Cleanup
+      if: always()
+      run: |
+        rm -rf extracted_new extracted_old temp_extract
+        rm -f /tmp/*.txt /tmp/*.md
