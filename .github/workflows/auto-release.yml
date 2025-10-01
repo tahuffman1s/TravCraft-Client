@@ -188,7 +188,7 @@ jobs:
         
         **Stable URL (always latest):**
         ```
-        https://github.com/${{ github.repository }}/releases/latest/download/modpack-latest.zip
+        https://github.com/${{ github.repository }}/releases/latest/download/travcraft-latest.zip
         ```
         
         **This version:**
@@ -220,7 +220,7 @@ jobs:
         body: ${{ steps.release_body.outputs.RELEASE_BODY }}
         files: |
           TravCraft-Client-v${{ steps.version.outputs.VERSION }}.zip
-          modpack-latest.zip
+          travcraft-latest.zip
         fail_on_unmatched_files: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
