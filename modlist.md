@@ -1,8 +1,8 @@
 # 📦 TravCraft Client Modlist
 
-**Version:** v1.0.19
-**Total Mods:** 68
-**Last Updated:** 2025-10-01 16:54:33 UTC
+**Version:** v1.0.22
+**Total Mods:** 69
+**Last Updated:** 2025-10-01 21:08:43 UTC
 
 ## 📋 Complete Mod List
 
@@ -35,6 +35,7 @@ baguettelib-1.20.1-Forge-1.1.0.jar
 balm-forge-1.20.1-7.3.35-all.jar
 born_in_chaos_[Forge]1.20.1_1.7.2.jar
 citadel-2.6.2-1.20.1.jar
+cloth-config-11.1.136-forge.jar
 collective-1.20.1-8.0.jar
 coroutil-forge-1.20.1-1.3.7.jar
 corpse-forge-1.20.1-1.0.23.jar
@@ -57,11 +58,11 @@ immersive_aircraft-1.4.0+1.20.1-forge.jar
 jei-1.20.1-forge-15.20.0.112.jar
 kotlinforforge-4.11.0-all.jar
 man_of_many_planes-0.2.0+1.20.1-forge.jar
+maplink-forge-4.0.1-1.20-1.20.1.jar
 modernfix-forge-5.24.4+mc1.20.1.jar
 moonlight-1.20-2.16.13-forge.jar
 mowziesmobs-1.7.3.jar
 notenoughanimations-forge-1.10.2-mc1.20.1.jar
-open-parties-and-claims-forge-1.20.1-0.25.6.jar
 petrolpark-1.20.1-1.4.11.jar
 petrolsparts-1.20.1-1.2.3-all.jar
 rottencreatures-forge-1.20.1-1.1.0.jar
@@ -107,6 +108,7 @@ welcomemessage-1.20.1-2.6.jar
 - `balm-forge-1.20.1-7.3.35-all`
 - `born_in_chaos_[Forge]1.20.1_1.7.2`
 - `citadel-2.6.2-1.20.1`
+- `cloth-config-11.1.136-forge`
 - `collective-1.20.1-8.0`
 - `coroutil-forge-1.20.1-1.3.7`
 - `corpse-forge-1.20.1-1.0.23`
@@ -129,11 +131,11 @@ welcomemessage-1.20.1-2.6.jar
 - `jei-1.20.1-forge-15.20.0.112`
 - `kotlinforforge-4.11.0-all`
 - `man_of_many_planes-0.2.0+1.20.1-forge`
+- `maplink-forge-4.0.1-1.20-1.20.1`
 - `modernfix-forge-5.24.4+mc1.20.1`
 - `moonlight-1.20-2.16.13-forge`
 - `mowziesmobs-1.7.3`
 - `notenoughanimations-forge-1.10.2-mc1.20.1`
-- `open-parties-and-claims-forge-1.20.1-0.25.6`
 - `petrolpark-1.20.1-1.4.11`
 - `petrolsparts-1.20.1-1.2.3-all`
 - `rottencreatures-forge-1.20.1-1.1.0`
@@ -157,8 +159,11 @@ welcomemessage-1.20.1-2.6.jar
 ## 📝 Recent Changes
 
 ### ✅ Recently Added
-- `XaerosWorldMap_1.39.12_Forge_1.20`
-- `Xaeros_Minimap_25.2.10_Forge_1.20`
+- `cloth-config-11.1.136-forge`
+- `maplink-forge-4.0.1-1.20-1.20.1`
+
+### ❌ Recently Removed
+- `open-parties-and-claims-forge-1.20.1-0.25.6`
 
 ---
 *This list is automatically generated and updated with each release.*
