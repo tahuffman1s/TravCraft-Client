@@ -6,7 +6,7 @@
 4. Click through the next few prompts
 5. At the main screen hit "Add Instance"
 7. Hit "Import"
-8. Paste this link in the URL box: `https://github.com/tahuffman1s/Travcraft-Client/releases/download/latest/travcraft-latest.zip`
+8. Paste this link in the URL box: `https://github.com/tahuffman1s/TravCraft-Client/releases/latest/download/travcraft-latest.zip`
 9. Click OK
 10. Wait
 11. Double click the icon, minecraft should start loading
