@@ -1,8 +1,8 @@
 # 📦 TravCraft Client Modlist
 
-**Version:** v1.0.16
-**Total Mods:** 66
-**Last Updated:** 2025-10-01 15:03:18 UTC
+**Version:** v1.0.19
+**Total Mods:** 68
+**Last Updated:** 2025-10-01 16:54:33 UTC
 
 ## 📋 Complete Mod List
 
@@ -15,6 +15,8 @@ ImmediatelyFast-Forge-1.5.2+1.20.4.jar
 MyNethersDelight-1.20.1-0.1.8.jar
 Platform-forge-1.20.1-1.2.10.1.jar
 ScorchedGuns-0.4.9-1.20.1.jar
+XaerosWorldMap_1.39.12_Forge_1.20.jar
+Xaeros_Minimap_25.2.10_Forge_1.20.jar
 YungsApi-1.20-Forge-4.0.6.jar
 YungsBetterDesertTemples-1.20-Forge-3.0.3.jar
 YungsBetterDungeons-1.20-Forge-4.0.4.jar
@@ -85,6 +87,8 @@ welcomemessage-1.20.1-2.6.jar
 - `MyNethersDelight-1.20.1-0.1.8`
 - `Platform-forge-1.20.1-1.2.10.1`
 - `ScorchedGuns-0.4.9-1.20.1`
+- `XaerosWorldMap_1.39.12_Forge_1.20`
+- `Xaeros_Minimap_25.2.10_Forge_1.20`
 - `YungsApi-1.20-Forge-4.0.6`
 - `YungsBetterDesertTemples-1.20-Forge-3.0.3`
 - `YungsBetterDungeons-1.20-Forge-4.0.4`
@@ -146,9 +150,15 @@ welcomemessage-1.20.1-2.6.jar
 
 ## 📥 Download
 
-**Latest Version:** [Download TravCraft Client](https://github.com/tahuffman1s/Travcraft-Client/releases/latest/download/travcraft-latest.zip)
+**Latest Version:** [Download TravCraft Client](https://github.com/tahuffman1s/TravCraft-Client/releases/latest/download/travcraft-latest.zip)
 
-**All Releases:** [View all versions](https://github.com/tahuffman1s/Travcraft-Client/releases)
+**All Releases:** [View all versions](https://github.com/tahuffman1s/TravCraft-Client/releases)
+
+## 📝 Recent Changes
+
+### ✅ Recently Added
+- `XaerosWorldMap_1.39.12_Forge_1.20`
+- `Xaeros_Minimap_25.2.10_Forge_1.20`
 
 ---
 *This list is automatically generated and updated with each release.*
