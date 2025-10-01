@@ -50,7 +50,7 @@ jobs:
             echo "Downloaded versioned release"
           else
             # Fallback to original filename pattern
-            PREV_DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/${LATEST_TAG}/TravCraft-latest.zip"
+            PREV_DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/${LATEST_TAG}/travcraft-latest.zip"
             echo "Trying fallback URL: $PREV_DOWNLOAD_URL"
             if curl -L -f -o previous_modpack.zip "$PREV_DOWNLOAD_URL" 2>/dev/null; then
               echo "Downloaded from fallback URL"
@@ -148,21 +148,47 @@ jobs:
         echo "Mod changes summary:"
         cat /tmp/mod_changes.md
     
-    - name: Update instance.cfg with version
+    - name: Update instance.cfg and scrub sensitive data
       run: |
         # Extract modpack
         mkdir -p temp_extract
         unzip -q TravCraft-Client.zip -d temp_extract
         
-        # Update instance.cfg if it exists
+        # Update and scrub instance.cfg if it exists
         if [ -f "temp_extract/instance.cfg" ]; then
           # Update the instance name to include version
           sed -i "s/name=.*/name=TravCraft-Client-${{ steps.version.outputs.VERSION }}/" temp_extract/instance.cfg
           
-          echo "Updated instance.cfg:"
-          grep "name=" temp_extract/instance.cfg
+          # PRIVACY SCRUBBING: Remove/reset Java paths and other sensitive data
+          # Remove or reset JavaPath line
+          sed -i '/^JavaPath=/d' temp_extract/instance.cfg
           
-          # Repackage the modpack with updated config
+          # Remove or reset Override Java Location
+          sed -i 's/^OverrideJavaLocation=.*/OverrideJavaLocation=false/' temp_extract/instance.cfg
+          
+          # Remove any absolute paths that might contain usernames
+          # This removes any line containing common user directory patterns
+          sed -i '/\/home\/[^/]*/d' temp_extract/instance.cfg
+          sed -i '/\/Users\/[^/]*/d' temp_extract/instance.cfg
+          sed -i '/C:\\Users\\[^\\]*/d' temp_extract/instance.cfg
+          sed -i '/C:\/Users\/[^\/]*/d' temp_extract/instance.cfg
+          
+          # Remove wrapper command if it contains paths
+          sed -i '/^WrapperCommand=/d' temp_extract/instance.cfg
+          sed -i '/^PreLaunchCommand=/d' temp_extract/instance.cfg
+          sed -i '/^PostExitCommand=/d' temp_extract/instance.cfg
+          
+          # Reset Java arguments to defaults if they exist
+          if grep -q "^JavaArgs=" temp_extract/instance.cfg; then
+            sed -i 's/^JavaArgs=.*/JavaArgs=-Xmx4G -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M/' temp_extract/instance.cfg
+          fi
+          
+          echo "Scrubbed instance.cfg:"
+          echo "========================"
+          cat temp_extract/instance.cfg | grep -E "(name=|JavaPath=|OverrideJavaLocation=)" || echo "Key fields shown"
+          echo "========================"
+          
+          # Repackage the modpack with updated and scrubbed config
           cd temp_extract
           zip -rq ../TravCraft-Client-v${{ steps.version.outputs.VERSION }}.zip *
           cd ..
@@ -176,6 +202,98 @@ jobs:
         
         # Cleanup
         rm -rf temp_extract
+    
+    - name: Generate modlist.md for Discord
+      run: |
+        # Create a nicely formatted modlist for Discord
+        echo "# 📦 TravCraft Client Modlist" > modlist.md
+        echo "" >> modlist.md
+        echo "**Version:** v${{ steps.version.outputs.VERSION }}" >> modlist.md
+        echo "**Total Mods:** ${{ steps.analyze.outputs.MOD_COUNT }}" >> modlist.md
+        echo "**Last Updated:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> modlist.md
+        echo "" >> modlist.md
+        echo "## 📋 Complete Mod List" >> modlist.md
+        echo "" >> modlist.md
+        
+        # Create Discord-friendly mod list (can be copy-pasted)
+        echo '```' >> modlist.md
+        if [ -s /tmp/new_mods.txt ]; then
+          cat /tmp/new_mods.txt >> modlist.md
+        else
+          echo "No mods found" >> modlist.md
+        fi
+        echo '```' >> modlist.md
+        echo "" >> modlist.md
+        
+        # Add formatted list with bullets for better readability
+        echo "## 🎮 Formatted List" >> modlist.md
+        echo "" >> modlist.md
+        if [ -s /tmp/new_mods.txt ]; then
+          while IFS= read -r mod; do
+            # Remove .jar extension for cleaner look
+            mod_name="${mod%.jar}"
+            echo "- \`$mod_name\`" >> modlist.md
+          done < /tmp/new_mods.txt
+        fi
+        echo "" >> modlist.md
+        
+        # Add download section
+        echo "## 📥 Download" >> modlist.md
+        echo "" >> modlist.md
+        echo "**Latest Version:** [Download TravCraft Client](https://github.com/${{ github.repository }}/releases/latest/download/travcraft-latest.zip)" >> modlist.md
+        echo "" >> modlist.md
+        echo "**All Releases:** [View all versions](https://github.com/${{ github.repository }}/releases)" >> modlist.md
+        echo "" >> modlist.md
+        
+        # Add recent changes if this isn't the first release
+        if [ -s /tmp/added_mods.txt ] || [ -s /tmp/removed_mods.txt ]; then
+          echo "## 📝 Recent Changes" >> modlist.md
+          echo "" >> modlist.md
+          
+          if [ -s /tmp/added_mods.txt ]; then
+            echo "### ✅ Recently Added" >> modlist.md
+            while IFS= read -r mod; do
+              mod_name="${mod%.jar}"
+              echo "- \`$mod_name\`" >> modlist.md
+            done < /tmp/added_mods.txt
+            echo "" >> modlist.md
+          fi
+          
+          if [ -s /tmp/removed_mods.txt ]; then
+            echo "### ❌ Recently Removed" >> modlist.md
+            while IFS= read -r mod; do
+              mod_name="${mod%.jar}"
+              echo "- \`$mod_name\`" >> modlist.md
+            done < /tmp/removed_mods.txt
+            echo "" >> modlist.md
+          fi
+        fi
+        
+        # Add footer
+        echo "---" >> modlist.md
+        echo "*This list is automatically generated and updated with each release.*" >> modlist.md
+        
+        echo "Generated modlist.md:"
+        echo "========================"
+        head -20 modlist.md
+        echo "... (truncated for display)"
+        echo "========================"
+    
+    - name: Commit modlist.md to repository
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        # Add and commit the modlist
+        git add modlist.md
+        
+        # Check if there are changes to commit
+        if git diff --staged --quiet; then
+          echo "No changes to modlist.md"
+        else
+          git commit -m "Update modlist.md for v${{ steps.version.outputs.VERSION }}"
+          git push
+        fi
     
     - name: Generate release body
       id: release_body
@@ -206,6 +324,8 @@ jobs:
         echo "" >> /tmp/release_body.md
         echo "---" >> /tmp/release_body.md
         echo "_Instance name automatically set to: TravCraft-Client-${{ steps.version.outputs.VERSION }}_" >> /tmp/release_body.md
+        echo "" >> /tmp/release_body.md
+        echo "📄 **[View Complete Modlist](https://github.com/${{ github.repository }}/blob/main/modlist.md)**" >> /tmp/release_body.md
         
         # Save to output
         echo "RELEASE_BODY<<EOF" >> $GITHUB_OUTPUT
