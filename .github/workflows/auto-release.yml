@@ -41,8 +41,8 @@ jobs:
         BASENAME=$(basename "${ORIGINAL_ZIP}" .zip)
         
         # Create TWO files: one with version, one with stable name
-        VERSIONED_ZIP="modpack-v${{ steps.version.outputs.VERSION }}.zip"
-        STABLE_ZIP="modpack-latest.zip"
+        VERSIONED_ZIP="TravCraft-Client-v${{ steps.version.outputs.VERSION }}.zip"
+        STABLE_ZIP="TravCraft-Client-latest.zip"
         
         # Copy to both names
         cp "${ORIGINAL_ZIP}" "${VERSIONED_ZIP}"
