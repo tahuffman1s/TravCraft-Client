@@ -1,13 +1,14 @@
 # 📦 TravCraft Client Modlist
 
-**Version:** v1.0.24
-**Total Mods:** 70
-**Last Updated:** 2025-10-02 03:57:10 UTC
+**Version:** v1.0.26
+**Total Mods:** 72
+**Last Updated:** 2025-10-02 04:04:23 UTC
 
 ## 📋 Complete Mod List
 
 ```
 Clumps-forge-1.20.1-12.0.0.4.jar
+Connector-1.0.0-beta.46+1.20.1.jar
 DustrialDecor-1.3.5-1.20.jar
 EasierSleeping-1.20.1-2.1.3.jar
 FarmersDelight-1.20.1-1.2.9.jar
@@ -49,6 +50,7 @@ createdeco-2.0.3-1.20.1-forge.jar
 createliquidfuel-2.1.1-1.20.1.jar
 curios-forge-5.14.1+1.20.1.jar
 embeddium-0.3.31+mc1.20.1.jar
+fabric-api-0.92.6+1.11.14+1.20.1.jar
 ferritecore-6.0.1-forge.jar
 framework-forge-1.20.1-0.7.15.jar
 ftb-essentials-forge-2001.2.3.jar
@@ -82,6 +84,7 @@ welcomemessage-1.20.1-2.6.jar
 ## 🎮 Formatted List
 
 - `Clumps-forge-1.20.1-12.0.0.4`
+- `Connector-1.0.0-beta.46+1.20.1`
 - `DustrialDecor-1.3.5-1.20`
 - `EasierSleeping-1.20.1-2.1.3`
 - `FarmersDelight-1.20.1-1.2.9`
@@ -123,6 +126,7 @@ welcomemessage-1.20.1-2.6.jar
 - `createliquidfuel-2.1.1-1.20.1`
 - `curios-forge-5.14.1+1.20.1`
 - `embeddium-0.3.31+mc1.20.1`
+- `fabric-api-0.92.6+1.11.14+1.20.1`
 - `ferritecore-6.0.1-forge`
 - `framework-forge-1.20.1-0.7.15`
 - `ftb-essentials-forge-2001.2.3`
@@ -161,7 +165,8 @@ welcomemessage-1.20.1-2.6.jar
 ## 📝 Recent Changes
 
 ### ✅ Recently Added
-- `universal_shops-1.3.2+1.20.1`
+- `Connector-1.0.0-beta.46+1.20.1`
+- `fabric-api-0.92.6+1.11.14+1.20.1`
 
 ---
 *This list is automatically generated and updated with each release.*
