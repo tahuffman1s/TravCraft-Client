@@ -1,8 +1,8 @@
 # 📦 TravCraft Client Modlist
 
-**Version:** v1.0.22
-**Total Mods:** 69
-**Last Updated:** 2025-10-01 21:08:43 UTC
+**Version:** v1.0.24
+**Total Mods:** 70
+**Last Updated:** 2025-10-02 03:57:10 UTC
 
 ## 📋 Complete Mod List
 
@@ -72,6 +72,7 @@ sophisticatedbackpacks-1.20.1-3.24.8.1386.jar
 sophisticatedcore-1.20.1-1.2.96.1185.jar
 supplementaries-1.20-3.1.39.jar
 tfmg-1.0.2c.jar
+universal_shops-1.3.2+1.20.1.jar
 voicechat-forge-1.20.1-2.5.35.jar
 watut-forge-1.20.1-1.2.3.jar
 waystones-forge-1.20.1-14.1.17.jar
@@ -145,6 +146,7 @@ welcomemessage-1.20.1-2.6.jar
 - `sophisticatedcore-1.20.1-1.2.96.1185`
 - `supplementaries-1.20-3.1.39`
 - `tfmg-1.0.2c`
+- `universal_shops-1.3.2+1.20.1`
 - `voicechat-forge-1.20.1-2.5.35`
 - `watut-forge-1.20.1-1.2.3`
 - `waystones-forge-1.20.1-14.1.17`
@@ -159,11 +161,7 @@ welcomemessage-1.20.1-2.6.jar
 ## 📝 Recent Changes
 
 ### ✅ Recently Added
-- `cloth-config-11.1.136-forge`
-- `maplink-forge-4.0.1-1.20-1.20.1`
-
-### ❌ Recently Removed
-- `open-parties-and-claims-forge-1.20.1-0.25.6`
+- `universal_shops-1.3.2+1.20.1`
 
 ---
 *This list is automatically generated and updated with each release.*
