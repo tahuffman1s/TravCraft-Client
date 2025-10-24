@@ -1,8 +1,8 @@
 # 📦 TravCraft Client Modlist
 
-**Version:** v1.0.32
-**Total Mods:** 76
-**Last Updated:** 2025-10-24 21:27:03 UTC
+**Version:** v1.0.35
+**Total Mods:** 77
+**Last Updated:** 2025-10-24 21:43:49 UTC
 
 ## 📋 Complete Mod List
 
@@ -69,6 +69,7 @@ mowziesmobs-1.7.3.jar
 notenoughanimations-forge-1.10.2-mc1.20.1.jar
 petrolpark-1.20.1-1.4.11.jar
 petrolsparts-1.20.1-1.2.3-all.jar
+player-animation-lib-forge-1.0.2-rc1+1.20.jar
 refurbished_furniture-forge-1.20.1-1.0.20.jar
 rottencreatures-forge-1.20.1-1.1.0.jar
 rusticdelight-forge-1.20.1-1.4.1.jar
@@ -149,6 +150,7 @@ welcomemessage-1.20.1-2.6.jar
 - `notenoughanimations-forge-1.10.2-mc1.20.1`
 - `petrolpark-1.20.1-1.4.11`
 - `petrolsparts-1.20.1-1.2.3-all`
+- `player-animation-lib-forge-1.0.2-rc1+1.20`
 - `refurbished_furniture-forge-1.20.1-1.0.20`
 - `rottencreatures-forge-1.20.1-1.1.0`
 - `rusticdelight-forge-1.20.1-1.4.1`
@@ -173,14 +175,7 @@ welcomemessage-1.20.1-2.6.jar
 ## 📝 Recent Changes
 
 ### ✅ Recently Added
-- `ScorchedGuns-0.5.3-1.20.1`
-- `bettercombat-forge-1.8.6+1.20.1`
-- `createaddition-1.20.1-1.3.2`
-- `refurbished_furniture-forge-1.20.1-1.0.20`
-- `simplyswords-forge-1.56.0-1.20.1`
-
-### ❌ Recently Removed
-- `ScorchedGuns-0.4.9-1.20.1`
+- `player-animation-lib-forge-1.0.2-rc1+1.20`
 
 ---
 *This list is automatically generated and updated with each release.*
