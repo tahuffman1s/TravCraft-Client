@@ -1,8 +1,8 @@
 # 📦 TravCraft Client Modlist
 
-**Version:** v1.0.26
-**Total Mods:** 72
-**Last Updated:** 2025-10-02 04:04:23 UTC
+**Version:** v1.0.32
+**Total Mods:** 76
+**Last Updated:** 2025-10-24 21:27:03 UTC
 
 ## 📋 Complete Mod List
 
@@ -15,7 +15,7 @@ FarmersDelight-1.20.1-1.2.9.jar
 ImmediatelyFast-Forge-1.5.2+1.20.4.jar
 MyNethersDelight-1.20.1-0.1.8.jar
 Platform-forge-1.20.1-1.2.10.1.jar
-ScorchedGuns-0.4.9-1.20.1.jar
+ScorchedGuns-0.5.3-1.20.1.jar
 XaerosWorldMap_1.39.12_Forge_1.20.jar
 Xaeros_Minimap_25.2.10_Forge_1.20.jar
 YungsApi-1.20-Forge-4.0.6.jar
@@ -34,6 +34,7 @@ appleskin-forge-mc1.20.1-2.5.1.jar
 architectury-9.2.14-forge.jar
 baguettelib-1.20.1-Forge-1.1.0.jar
 balm-forge-1.20.1-7.3.35-all.jar
+bettercombat-forge-1.8.6+1.20.1.jar
 born_in_chaos_[Forge]1.20.1_1.7.2.jar
 citadel-2.6.2-1.20.1.jar
 cloth-config-11.1.136-forge.jar
@@ -46,6 +47,7 @@ create-stuff-additions1.20.1_v2.1.0.jar
 create_central_kitchen-1.20.1-for-create-6.0.6-1.4.3b.jar
 create_enchantment_industry-1.3.3-for-create-6.0.6.jar
 create_power_loader-2.0.3-mc1.20.1.jar
+createaddition-1.20.1-1.3.2.jar
 createdeco-2.0.3-1.20.1-forge.jar
 createliquidfuel-2.1.1-1.20.1.jar
 curios-forge-5.14.1+1.20.1.jar
@@ -67,8 +69,10 @@ mowziesmobs-1.7.3.jar
 notenoughanimations-forge-1.10.2-mc1.20.1.jar
 petrolpark-1.20.1-1.4.11.jar
 petrolsparts-1.20.1-1.2.3-all.jar
+refurbished_furniture-forge-1.20.1-1.0.20.jar
 rottencreatures-forge-1.20.1-1.1.0.jar
 rusticdelight-forge-1.20.1-1.4.1.jar
+simplyswords-forge-1.56.0-1.20.1.jar
 sliceanddice-forge-3.5.1.jar
 sophisticatedbackpacks-1.20.1-3.24.8.1386.jar
 sophisticatedcore-1.20.1-1.2.96.1185.jar
@@ -91,7 +95,7 @@ welcomemessage-1.20.1-2.6.jar
 - `ImmediatelyFast-Forge-1.5.2+1.20.4`
 - `MyNethersDelight-1.20.1-0.1.8`
 - `Platform-forge-1.20.1-1.2.10.1`
-- `ScorchedGuns-0.4.9-1.20.1`
+- `ScorchedGuns-0.5.3-1.20.1`
 - `XaerosWorldMap_1.39.12_Forge_1.20`
 - `Xaeros_Minimap_25.2.10_Forge_1.20`
 - `YungsApi-1.20-Forge-4.0.6`
@@ -110,6 +114,7 @@ welcomemessage-1.20.1-2.6.jar
 - `architectury-9.2.14-forge`
 - `baguettelib-1.20.1-Forge-1.1.0`
 - `balm-forge-1.20.1-7.3.35-all`
+- `bettercombat-forge-1.8.6+1.20.1`
 - `born_in_chaos_[Forge]1.20.1_1.7.2`
 - `citadel-2.6.2-1.20.1`
 - `cloth-config-11.1.136-forge`
@@ -122,6 +127,7 @@ welcomemessage-1.20.1-2.6.jar
 - `create_central_kitchen-1.20.1-for-create-6.0.6-1.4.3b`
 - `create_enchantment_industry-1.3.3-for-create-6.0.6`
 - `create_power_loader-2.0.3-mc1.20.1`
+- `createaddition-1.20.1-1.3.2`
 - `createdeco-2.0.3-1.20.1-forge`
 - `createliquidfuel-2.1.1-1.20.1`
 - `curios-forge-5.14.1+1.20.1`
@@ -143,8 +149,10 @@ welcomemessage-1.20.1-2.6.jar
 - `notenoughanimations-forge-1.10.2-mc1.20.1`
 - `petrolpark-1.20.1-1.4.11`
 - `petrolsparts-1.20.1-1.2.3-all`
+- `refurbished_furniture-forge-1.20.1-1.0.20`
 - `rottencreatures-forge-1.20.1-1.1.0`
 - `rusticdelight-forge-1.20.1-1.4.1`
+- `simplyswords-forge-1.56.0-1.20.1`
 - `sliceanddice-forge-3.5.1`
 - `sophisticatedbackpacks-1.20.1-3.24.8.1386`
 - `sophisticatedcore-1.20.1-1.2.96.1185`
@@ -165,8 +173,14 @@ welcomemessage-1.20.1-2.6.jar
 ## 📝 Recent Changes
 
 ### ✅ Recently Added
-- `Connector-1.0.0-beta.46+1.20.1`
-- `fabric-api-0.92.6+1.11.14+1.20.1`
+- `ScorchedGuns-0.5.3-1.20.1`
+- `bettercombat-forge-1.8.6+1.20.1`
+- `createaddition-1.20.1-1.3.2`
+- `refurbished_furniture-forge-1.20.1-1.0.20`
+- `simplyswords-forge-1.56.0-1.20.1`
+
+### ❌ Recently Removed
+- `ScorchedGuns-0.4.9-1.20.1`
 
 ---
 *This list is automatically generated and updated with each release.*
