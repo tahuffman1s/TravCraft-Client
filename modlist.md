@@ -1,8 +1,8 @@
 # 📦 TravCraft Client Modlist
 
-**Version:** v1.0.35
-**Total Mods:** 77
-**Last Updated:** 2025-10-24 21:43:49 UTC
+**Version:** v1.0.38
+**Total Mods:** 78
+**Last Updated:** 2025-11-03 13:24:09 UTC
 
 ## 📋 Complete Mod List
 
@@ -34,7 +34,6 @@ appleskin-forge-mc1.20.1-2.5.1.jar
 architectury-9.2.14-forge.jar
 baguettelib-1.20.1-Forge-1.1.0.jar
 balm-forge-1.20.1-7.3.35-all.jar
-bettercombat-forge-1.8.6+1.20.1.jar
 born_in_chaos_[Forge]1.20.1_1.7.2.jar
 citadel-2.6.2-1.20.1.jar
 cloth-config-11.1.136-forge.jar
@@ -46,6 +45,7 @@ create-1.20.1-6.0.6.jar
 create-stuff-additions1.20.1_v2.1.0.jar
 create_central_kitchen-1.20.1-for-create-6.0.6-1.4.3b.jar
 create_enchantment_industry-1.3.3-for-create-6.0.6.jar
+create_furnace_lava_adapter-1.20.1-1.3.2.jar
 create_power_loader-2.0.3-mc1.20.1.jar
 createaddition-1.20.1-1.3.2.jar
 createdeco-2.0.3-1.20.1-forge.jar
@@ -73,6 +73,7 @@ player-animation-lib-forge-1.0.2-rc1+1.20.jar
 refurbished_furniture-forge-1.20.1-1.0.20.jar
 rottencreatures-forge-1.20.1-1.1.0.jar
 rusticdelight-forge-1.20.1-1.4.1.jar
+simplylight-1.20.1-1.4.6-build.50.jar
 simplyswords-forge-1.56.0-1.20.1.jar
 sliceanddice-forge-3.5.1.jar
 sophisticatedbackpacks-1.20.1-3.24.8.1386.jar
@@ -115,7 +116,6 @@ welcomemessage-1.20.1-2.6.jar
 - `architectury-9.2.14-forge`
 - `baguettelib-1.20.1-Forge-1.1.0`
 - `balm-forge-1.20.1-7.3.35-all`
-- `bettercombat-forge-1.8.6+1.20.1`
 - `born_in_chaos_[Forge]1.20.1_1.7.2`
 - `citadel-2.6.2-1.20.1`
 - `cloth-config-11.1.136-forge`
@@ -127,6 +127,7 @@ welcomemessage-1.20.1-2.6.jar
 - `create-stuff-additions1.20.1_v2.1.0`
 - `create_central_kitchen-1.20.1-for-create-6.0.6-1.4.3b`
 - `create_enchantment_industry-1.3.3-for-create-6.0.6`
+- `create_furnace_lava_adapter-1.20.1-1.3.2`
 - `create_power_loader-2.0.3-mc1.20.1`
 - `createaddition-1.20.1-1.3.2`
 - `createdeco-2.0.3-1.20.1-forge`
@@ -154,6 +155,7 @@ welcomemessage-1.20.1-2.6.jar
 - `refurbished_furniture-forge-1.20.1-1.0.20`
 - `rottencreatures-forge-1.20.1-1.1.0`
 - `rusticdelight-forge-1.20.1-1.4.1`
+- `simplylight-1.20.1-1.4.6-build.50`
 - `simplyswords-forge-1.56.0-1.20.1`
 - `sliceanddice-forge-3.5.1`
 - `sophisticatedbackpacks-1.20.1-3.24.8.1386`
@@ -175,7 +177,11 @@ welcomemessage-1.20.1-2.6.jar
 ## 📝 Recent Changes
 
 ### ✅ Recently Added
-- `player-animation-lib-forge-1.0.2-rc1+1.20`
+- `create_furnace_lava_adapter-1.20.1-1.3.2`
+- `simplylight-1.20.1-1.4.6-build.50`
+
+### ❌ Recently Removed
+- `bettercombat-forge-1.8.6+1.20.1`
 
 ---
 *This list is automatically generated and updated with each release.*
